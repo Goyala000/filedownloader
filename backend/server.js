@@ -8,7 +8,6 @@ import connectDB from "./config/db.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
 import fileDownloadRoutes from "./routes/fileDownloadRoutes.js";
 import singleDownloadRoutes from "./routes/singleDownloadRoutes.js";
-import testRoute from "./routes/testRoute.js";
 
 dotenv.config();
 
@@ -27,7 +26,6 @@ app.get("/", (req, res) => {
 app.use("/api/downloads", fileDownloadRoutes);
 app.use("/api/uploads", uploadRoutes);
 app.use("/api/download", singleDownloadRoutes);
-app.use("/api/test", testRoute);
 
 const __dirname = path.resolve();
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")));

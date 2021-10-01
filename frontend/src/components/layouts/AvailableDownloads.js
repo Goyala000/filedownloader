@@ -44,10 +44,21 @@ const AvailableDownloads = () => {
   const downloadList = useSelector((state) => state.downloadList);
   const { loading, downloads, error } = downloadList;
 
+  const fileNameGenerator = (length) => {
+    let result = "";
+    const characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    const charactersLength = characters.length;
+    for (var i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+  };
+
   const singleFileDownloadHandler = async (id) => {
     const res = await fetch(`/api/download/${id}`);
     const blob = await res.blob();
-    download(blob, "test.jpg");
+    download(blob, fileNameGenerator(10));
   };
 
   useEffect(() => {
