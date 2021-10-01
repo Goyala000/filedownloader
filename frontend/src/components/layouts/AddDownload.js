@@ -16,6 +16,7 @@ const Title = styled.h2`
 
 const AddDownload = ({ history }) => {
   const [title, setTitle] = useState("");
+  const [originalFile, setOriginalFile] = useState("");
   const [file, setFile] = useState("");
   const [uploading, setUploading] = useState(false);
 
@@ -26,6 +27,7 @@ const AddDownload = ({ history }) => {
 
   const uploadFileHandler = async (e) => {
     const file = e.target.files[0];
+    const fileName = e.target.files[0].name;
     const formData = new FormData();
     formData.append("formFile", file);
     setUploading(true);
@@ -41,6 +43,7 @@ const AddDownload = ({ history }) => {
       console.log(data);
 
       setFile(data);
+      setOriginalFile(fileName);
       setUploading(false);
     } catch (error) {
       console.error(error);
@@ -50,7 +53,7 @@ const AddDownload = ({ history }) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(createDownload(title, file));
+    dispatch(createDownload(title, originalFile, file));
   };
 
   useEffect(() => {

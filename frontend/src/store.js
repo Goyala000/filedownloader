@@ -4,11 +4,13 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import {
   downloadCreateReducer,
   downloadListReducer,
+  singleDownloadCreateReducer,
 } from "./reducers/downloadReducers";
 
 const reducer = combineReducers({
   downloadList: downloadListReducer,
   downloadCreate: downloadCreateReducer,
+  singleDownloadCreate: singleDownloadCreateReducer,
 });
 
 const initialState = {};

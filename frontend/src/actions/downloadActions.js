@@ -6,6 +6,9 @@ import {
   FILE_DOWNLOAD_FAIL,
   FILE_DOWNLOAD_REQUEST,
   FILE_DOWNLOAD_SUCCESS,
+  SINGLE_FILE_CREATE_FAIL,
+  SINGLE_FILE_CREATE_REQUEST,
+  SINGLE_FILE_CREATE_SUCCESS,
 } from "./types";
 
 export const listDownloads = () => async (dispatch) => {
@@ -28,40 +31,45 @@ export const listDownloads = () => async (dispatch) => {
   }
 };
 
-export const createDownload = (title, file) => async (dispatch) => {
-  try {
-    dispatch({ type: FILE_CREATE_REQUEST });
+export const createDownload =
+  (title, originalFile, file) => async (dispatch) => {
+    try {
+      dispatch({ type: FILE_CREATE_REQUEST });
 
-    const { data } = await axios.post(`/api/downloads`, { title, file });
+      const { data } = await axios.post(`/api/downloads`, {
+        title,
+        originalFile,
+        file,
+      });
 
-    dispatch({
-      type: FILE_CREATE_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: FILE_CREATE_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    });
-  }
-};
+      dispatch({
+        type: FILE_CREATE_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: FILE_CREATE_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
 
 export const createSingleDownload = (id) => async (dispatch) => {
   try {
-    dispatch({ type: FILE_CREATE_REQUEST });
+    dispatch({ type: SINGLE_FILE_CREATE_REQUEST });
     console.log(id);
 
-    await axios.get(`/api/downloads/${id}`, {});
+    await axios.get(`http://localhost:5000/api/download/${id}`);
 
     dispatch({
-      type: FILE_CREATE_SUCCESS,
+      type: SINGLE_FILE_CREATE_SUCCESS,
     });
   } catch (error) {
     dispatch({
-      type: FILE_CREATE_FAIL,
+      type: SINGLE_FILE_CREATE_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

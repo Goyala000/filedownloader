@@ -5,6 +5,9 @@ import {
   FILE_DOWNLOAD_FAIL,
   FILE_DOWNLOAD_REQUEST,
   FILE_DOWNLOAD_SUCCESS,
+  SINGLE_FILE_CREATE_FAIL,
+  SINGLE_FILE_CREATE_REQUEST,
+  SINGLE_FILE_CREATE_SUCCESS,
 } from "../actions/types";
 
 export const downloadListReducer = (state = { downloads: [] }, action) => {
@@ -27,6 +30,19 @@ export const downloadCreateReducer = (state = {}, action) => {
     case FILE_CREATE_SUCCESS:
       return { loading: false, success: true, download: action.payload };
     case FILE_CREATE_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const singleDownloadCreateReducer = (state = {}, action) => {
+  switch (action.type) {
+    case SINGLE_FILE_CREATE_REQUEST:
+      return { loading: true };
+    case SINGLE_FILE_CREATE_SUCCESS:
+      return { loading: false, success: true, singleDownload: action.payload };
+    case SINGLE_FILE_CREATE_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;

@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { Container } from "react-bootstrap";
+import download from "downloadjs";
 import {
   createSingleDownload,
   listDownloads,
@@ -9,6 +10,7 @@ import {
 
 import Loader from "./Loader";
 import Message from "./Message";
+import axios from "axios";
 
 const Title = styled.h2`
   margin: 40px;
@@ -42,8 +44,10 @@ const AvailableDownloads = () => {
   const downloadList = useSelector((state) => state.downloadList);
   const { loading, downloads, error } = downloadList;
 
-  const singleFileDownloadHandler = (id) => {
-    dispatch(createSingleDownload(id));
+  const singleFileDownloadHandler = async (id) => {
+    const res = await fetch(`/api/download/${id}`);
+    const blob = await res.blob();
+    download(blob, "test.jpg");
   };
 
   useEffect(() => {

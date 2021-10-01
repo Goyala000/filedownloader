@@ -15,16 +15,18 @@ const getDownloads = asyncHandler(async (req, res) => {
 // @route   POST /api/downloads
 // @access  Public
 const createDownload = asyncHandler(async (req, res) => {
-  const { title, file } = req.body;
+  const { title, originalFile, file } = req.body;
 
   const download = await FileDownload.create({
     title,
+    originalFile,
     file,
   });
   if (download) {
     res.status(201).json({
       _id: download._id,
       title: download.title,
+      originalFile: download.originalFile,
       file: download.file,
     });
   } else {

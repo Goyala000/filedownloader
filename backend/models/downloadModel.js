@@ -6,6 +6,10 @@ const fileDownloadSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    originalFile: {
+      type: String,
+      required: true,
+    },
     file: {
       type: String,
       required: true,
